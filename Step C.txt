@@ -1,0 +1,21 @@
+Final Project Steps
+
+Create repository and download github desktop
+
+Review regression models/predictive modeling 
+
+Finalize research question and hypothesis
+
+Pre-registration for Step D
+
+Data cleaning to select variables we want to use and run preliminary analyses 
+(Regressing aspects of perceived social support and/or perceived stress on outcomes relating to adulthood and maturity
+Covariates: age, sex, etc?)
+
+Run secondary analyses as needed
+
+Create OSF project, add Amanda as collaborator 
+
+Weekly group meetings/check ins 
+
+

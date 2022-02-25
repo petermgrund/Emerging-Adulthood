@@ -1,7 +1,0 @@
-#testing
-
-<<<<<<< Updated upstream
-#editing
-=======
-#PL
->>>>>>> Stashed changes

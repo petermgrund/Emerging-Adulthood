@@ -1,0 +1,4 @@
+Regressing aspects of perceived social support and/or stress on outcomes relating to adulthood and maturity. 
+
+Consider covariates like age, sex, other stuff. 
+

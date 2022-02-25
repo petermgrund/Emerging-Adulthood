@@ -2,3 +2,10 @@ Regressing aspects of perceived social support and/or stress on outcomes relatin
 
 Consider covariates like age, sex, other stuff. 
 
+------------------------------------------------------------------------
+
+https://osf.io/te54b/ 	<- osf 
+
+https://osf.io/nt4kf/ 	<- data files
+
+

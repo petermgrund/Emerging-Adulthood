@@ -39,3 +39,5 @@ vignettes/*.pdf
 .Renviron
 ~$EAMMi2-Data1.2.xlsx
 .DS_Store
+R-analysis/.DS_Store
+.DS_Store

@@ -22,4 +22,5 @@ df$ID <- 1:nrow(df)
 # Select variables of interest --------------------------------------------
 
 df_select <- df %>%
-  select(ID, mindful_1:mindful_biascheck)
+  select(ID, mindful_1:mindful_biascheck, sex:race, school_coded, IDEA_1:`IDEA-bias-dummy`,
+         income, stress_1:stress_bias_dummy, `moa1#1_1`:)

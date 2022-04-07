@@ -45,6 +45,11 @@ df_analysis$exploration <- df_analysis %>%
 
 ```
 
+## Measures of Adulthood
+```{r Score measures of adulthood}
+df_analysis$achievement <- df_analysis %>% 
+  select(ID, starts_with("MOA"))
+
 ```
 
 ## Percieved Stress Scale

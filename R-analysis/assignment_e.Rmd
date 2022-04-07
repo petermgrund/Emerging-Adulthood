@@ -5,15 +5,14 @@ date: "4/6/2022"
 output: html_document
 ---
 
-```{r setup}
+# Setup
+```{r Setup}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Import data and dependencies
-
 ```{r Import data and dependencies}
 library(tidyverse)
-# load tidyverse
+library(car)
 ```
 
 This open-source data file can be found at <https://osf.io/te54b/>

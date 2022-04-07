@@ -36,6 +36,15 @@ df_analysis <- df %>%
 
 ```
 
+# Score measures
+## IDEA
+```{r Score IDEA}
+df_analysis$exploration <- df_analysis %>% 
+  select(IDEA_1, IDEA_2, IDEA_5, IDEA_6) %>%
+  rowMeans()
+
+```
+
 ```
 
 ## Percieved Stress Scale
@@ -46,5 +55,14 @@ df_analysis$stress_7 <- recode(df_analysis$stress_7, '5=1; 4=2; 3=3; 2=4; 1=5')
 df_analysis$stress_8 <- recode(df_analysis$stress_8, '5=1; 4=2; 3=3; 2=4; 1=5')
 
 ```
+
+## Mindfulness
+```{r Score mindfulness}
+df_analysis$mindful_score <- df_analysis %>%
+  select(starts_with("mindful")) %>%
+  rowMeans()
+
+```
+
 ```
 

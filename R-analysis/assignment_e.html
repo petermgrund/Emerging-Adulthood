@@ -171,9 +171,9 @@ pre code {
 </div>
 
 
+<div id="setup" class="section level1">
+<h1>Setup</h1>
 <pre class="r"><code>knitr::opts_chunk$set(echo = TRUE)</code></pre>
-<div id="import-data-and-dependencies" class="section level2">
-<h2>Import data and dependencies</h2>
 <pre class="r"><code>library(tidyverse)</code></pre>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
 <pre><code>## ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
@@ -183,6 +183,23 @@ pre code {
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(Rmisc)</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## Loading required package: plyr</code></pre>
+<pre><code>## ------------------------------------------------------------------------------</code></pre>
+<pre><code>## You have loaded plyr after dplyr - this is likely to cause problems.
+## If you need functions from both plyr and dplyr, please load plyr first, then dplyr:
+## library(plyr); library(dplyr)</code></pre>
+<pre><code>## ------------------------------------------------------------------------------</code></pre>
+<pre><code>## 
+## Attaching package: &#39;plyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     arrange, count, desc, failwith, id, mutate, rename, summarise,
+##     summarize</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     compact</code></pre>
 <pre class="r"><code># load tidyverse</code></pre>
 <p>This open-source data file can be found at <a href="https://osf.io/te54b/" class="uri">https://osf.io/te54b/</a></p>
 <pre class="r"><code>df &lt;- read_csv(&quot;In-data/emerging_adult_data.csv&quot;)</code></pre>
@@ -196,16 +213,46 @@ pre code {
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div id="add-ids-to-rows" class="section level2">
-<h2>Add IDs to rows</h2>
+<div id="clean-data" class="section level1">
+<h1>Clean data</h1>
 <pre class="r"><code>df$ID &lt;- 1:nrow(df)</code></pre>
-</div>
-<div id="select-variables-from-dataset" class="section level2">
-<h2>Select variables from dataset</h2>
-<pre class="r"><code>df_select &lt;- df %&gt;%
+<pre class="r"><code>df_analysis &lt;- df %&gt;%
   select(ID, mindful_1:mindful_biascheck, sex:race, school_coded, IDEA_1:`IDEA-bias-dummy`,
          income, stress_1:stress_bias_dummy, `moa1#1_1`:`MOA-ACH_dummy`) %&gt;%
-  select(-(sibling))</code></pre>
+  select(-(sibling)) </code></pre>
+</div>
+<div id="score-measures" class="section level1">
+<h1>Score measures</h1>
+<pre class="r"><code>df_analysis$exploration &lt;- df_analysis %&gt;% 
+  select(IDEA_1, IDEA_2, IDEA_5, IDEA_6) %&gt;%
+  rowMeans()</code></pre>
+<pre class="r"><code>df_analysis$achievement &lt;- df_analysis %&gt;% 
+  select(ID, starts_with(&quot;MOA&quot;))</code></pre>
+<pre class="r"><code>df_analysis$stress_4 &lt;- recode(df_analysis$stress_4, &#39;5=1; 4=2; 3=3; 2=4; 1=5&#39;)</code></pre>
+<pre><code>## Warning: Unreplaced values treated as NA as .x is not compatible. Please specify
+## replacements exhaustively or supply .default</code></pre>
+<pre class="r"><code>df_analysis$stress_5 &lt;- recode(df_analysis$stress_5, &#39;5=1; 4=2; 3=3; 2=4; 1=5&#39;)</code></pre>
+<pre><code>## Warning: Unreplaced values treated as NA as .x is not compatible. Please specify
+## replacements exhaustively or supply .default</code></pre>
+<pre class="r"><code>df_analysis$stress_7 &lt;- recode(df_analysis$stress_7, &#39;5=1; 4=2; 3=3; 2=4; 1=5&#39;)</code></pre>
+<pre><code>## Warning: Unreplaced values treated as NA as .x is not compatible. Please specify
+## replacements exhaustively or supply .default</code></pre>
+<pre class="r"><code>df_analysis$stress_8 &lt;- recode(df_analysis$stress_8, &#39;5=1; 4=2; 3=3; 2=4; 1=5&#39;)</code></pre>
+<pre><code>## Warning: Unreplaced values treated as NA as .x is not compatible. Please specify
+## replacements exhaustively or supply .default</code></pre>
+<pre class="r"><code>df_analysis$mindful_score &lt;- df_analysis %&gt;%
+  select(starts_with(&quot;mindful&quot;)) %&gt;%
+  rowMeans()</code></pre>
+<pre class="r"><code># pre_post_summary &lt;- df_v2 %&gt;% 
+#   summarize(
+#     mean_pre = mean(PreTest),
+#     sd_pre = sd(PreTest),
+#     median_pre = median(PreTest),
+#     mean_post = mean(PostTest),
+#     sd_post = sd(PostTest),
+#     median_post = median(PostTest)
+#   ) %&gt;%
+#   write_csv(&quot;out_tables/pre_post_summary.csv&quot;)</code></pre>
 </div>
 
 

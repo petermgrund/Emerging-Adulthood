@@ -53,7 +53,7 @@ df_analysis$exploration <- df_analysis %>%
 ## Measures of Adulthood
 ```{r Score measures of adulthood}
 df_analysis$achievement <- df_analysis %>% 
-  select(ID, starts_with("MOA"))
+  select(ID, starts_with("MOA")) %>% rowSums()
 
 ```
 
@@ -64,6 +64,7 @@ df_analysis$stress_5 <- recode(df_analysis$stress_5, '5=1; 4=2; 3=3; 2=4; 1=5')
 df_analysis$stress_7 <- recode(df_analysis$stress_7, '5=1; 4=2; 3=3; 2=4; 1=5')
 df_analysis$stress_8 <- recode(df_analysis$stress_8, '5=1; 4=2; 3=3; 2=4; 1=5')
 
+df_analysis$stress_score <- df_analysis %>% select(stress_1:stress_10) %>% rowSums()
 ```
 
 ## Mindfulness
@@ -79,8 +80,22 @@ df_analysis$mindful_score <- df_analysis %>%
 index_summary <- df_analysis %>%
   summarize(
     mean_mindful = mean(mindful_score, na.rm = TRUE),
-    sd_mindful = sd(mindful_score, na.rm = TRUE)
-  ) %>%
+    sd_mindful = sd(mindful_score, na.rm = TRUE),
+    mean_achievement = mean(achievement, na.rm=TRUE),
+    sd_achievement = sd(achievement, na.rm=TRUE),
+    mean_stress = mean(stress_score, na.rm=TRUE),
+    sd_stress = sd(stress_score, na.rm=TRUE)
+    ) %>%
   write_csv("Out-data/index_measure_summary.csv")
 ```
 
+```{r prelim regression analyses}
+lm1 <- lm(achievement~stress_score, data=df_analysis)
+summary(lm1)
+
+cor.test(df_analysis$achievement, df_analysis$stress_score)
+
+lm2 <- lm(achievement~exploration, data=df_analysis)
+summary(lm2)
+cor.test(df_analysis$achievement, df_analysis$exploration)
+```

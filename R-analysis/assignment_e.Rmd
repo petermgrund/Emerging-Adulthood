@@ -22,20 +22,17 @@ df <- read_csv("In-data/emerging_adult_data.csv")
 
 ```
 
-## Add IDs to rows
+# Clean data
 
 ```{r Add rows}
 df$ID <- 1:nrow(df)
-
 ```
 
-## Select variables from dataset
-
 ```{r Select variables}
-df_select <- df %>%
+df_analysis <- df %>%
   select(ID, mindful_1:mindful_biascheck, sex:race, school_coded, IDEA_1:`IDEA-bias-dummy`,
          income, stress_1:stress_bias_dummy, `moa1#1_1`:`MOA-ACH_dummy`) %>%
-  select(-(sibling))
+  select(-(sibling)) 
 
 ```
 

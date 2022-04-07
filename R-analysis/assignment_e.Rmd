@@ -42,6 +42,9 @@ df_select <- df %>%
 
 ```{r Scoring PSS}
 percieved_stress <- df_select %>%
-  select(ID, stress_1:stress_bias_dummy)
+df_select$stress_4 <- recode(df_select$stress_4, '5=1; 4=2; 3=3; 2=4; 1=5')
+df_select$stress_5 <- recode(df_select$stress_5, '5=1; 4=2; 3=3; 2=4; 1=5')
+df_select$stress_7 <- recode(df_select$stress_7, '5=1; 4=2; 3=3; 2=4; 1=5')
+df_select$stress_8 <- recode(df_select$stress_8, '5=1; 4=2; 3=3; 2=4; 1=5')
 ```
 

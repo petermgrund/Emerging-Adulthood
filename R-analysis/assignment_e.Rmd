@@ -69,5 +69,17 @@ df_analysis$mindful_score <- df_analysis %>%
 
 ```
 
+# Preliminary data analysis
+```{r Summarize data}
+# pre_post_summary <- df_v2 %>% 
+#   summarize(
+#     mean_pre = mean(PreTest),
+#     sd_pre = sd(PreTest),
+#     median_pre = median(PreTest),
+#     mean_post = mean(PostTest),
+#     sd_post = sd(PostTest),
+#     median_post = median(PostTest)
+#   ) %>%
+#   write_csv("out_tables/pre_post_summary.csv")
 ```
 

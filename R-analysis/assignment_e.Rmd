@@ -1,0 +1,47 @@
+---
+title: "Assignment E"
+author: "Peter M Grund"
+date: "4/6/2022"
+output: html_document
+---
+
+```{r setup}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Import data and dependencies
+
+```{r Import data and dependencies}
+library(tidyverse)
+# load tidyverse
+```
+
+This open-source data file can be found at <https://osf.io/te54b/>
+
+```{r Upload data}
+df <- read_csv("In-data/emerging_adult_data.csv")
+
+```
+
+## Add IDs to rows
+
+```{r Add rows}
+df$ID <- 1:nrow(df)
+
+```
+
+## Select variables from dataset
+
+```{r Select variables}
+df_select <- df %>%
+  select(ID, mindful_1:mindful_biascheck, sex:race, school_coded, IDEA_1:`IDEA-bias-dummy`,
+         income, stress_1:stress_bias_dummy, `moa1#1_1`:`MOA-ACH_dummy`) %>%
+  select(-(sibling))
+
+```
+
+```{r Scoring PSS}
+percieved_stress <- df_select %>%
+  select(ID, stress_1:stress_bias_dummy)
+```
+

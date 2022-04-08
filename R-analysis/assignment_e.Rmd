@@ -121,9 +121,14 @@ demographic_summary <- df_analysis %>%
 cor_achieve_stress <- cor.test(df_analysis$achievement, df_analysis$stress_score)
 p_cor_achieve_stress <- cor_achieve_stress$p.value
 
-# Between stess and mindfulness
+# Between stress and mindfulness
 cor_mindful_stress <- cor.test(df_analysis$mindful_score, df_analysis$stress_score)
 p_cor_mindful_stress <- cor_mindful_stress$p.value
+
+# Between achievement and exploration
+cor_ach_explor <- cor.test(df_analysis$achievement, df_analysis$exploration)
+p_cor_ach_explor <- cor_ach_explor$p.value
+
 
 ```
 
@@ -131,7 +136,7 @@ p_cor_mindful_stress <- cor_mindful_stress$p.value
 
 ## Linear models
 ```{r prelim regression analyses}
-# Linear model 1: Regressing achievment score onto stress
+# Linear model 1: Regressing achievement score onto stress
 lm_1 <- lm(achievement ~ stress_score, data = df_analysis)
 
 summary(lm_1)
@@ -174,7 +179,15 @@ by_race_bar
 
 ```
 
-## Graphic of regression of stress onto mindfulness index score
+## Graphic of regression of stress onto achievement 
+```{r}
+reg_achieve_stress <- ggplot(df_analysis, aes(x = achievement, y = stress_score)) + 
+  geom_point() +
+  stat_smooth(method = "lm", col = "green") 
+reg_achieve_stress
+```
+
+## Graphic of regression of stress onto mindfulness
 ```{r}
 reg_mindf_stress <- ggplot(df_analysis, aes(x = mindful_score, y = stress_score)) + 
   geom_point() +

@@ -115,7 +115,7 @@ demographic_summary <- df_analysis %>%
 ```
 
 
-## Correlaions
+## Correlations
 ```{r}
 # Between achievement and stress
 cor_achieve_stress <- cor.test(df_analysis$achievement, df_analysis$stress_score)
@@ -197,3 +197,9 @@ reg_mindf_stress <- ggplot(df_analysis, aes(x = mindful_score, y = stress_score)
 reg_mindf_stress
 ```
 
+# Incomplete Analyses and Visuals 
+## Mediating Variable Analysis 
+A linear regression of our IV (stress score) on the DV (achievement) has already been completed. The next step is to run a linear regression of stress score on exploration (mediating variable). From there, the Mediation package will be downloaded to combine the regression models created above and estimate medation. 
+
+## Regression Visuals
+A graphic of the regression of stress on exploration will be created as well as a graphical representation of the mediated effect. 

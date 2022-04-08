@@ -18,7 +18,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r Import data and dependencies}
 library(tidyverse)
 library(car)
-library(scales)
 library(viridis)
 ```
 
@@ -37,8 +36,7 @@ df$ID <- 1:nrow(df)
 
 ```{r Select variables}
 df_analysis <- df %>%
-  select(ID, mindful_1:mindful_biascheck, sex:race, school_coded, IDEA_1:`IDEA-bias-dummy`,
-         income, stress_1:stress_bias_dummy, `moa1#1_1`:`MOA-ACH_dummy`) %>%
+  select(ID, mindful_1:mindful_biascheck, sex:race, school_coded, IDEA_1:`IDEA-bias-dummy`, income, stress_1:stress_bias_dummy, `moa1#1_1`:`MOA-ACH_dummy`) %>%
   # select variables of interest
   filter(age <= 25)
   # remove participants over the age of 25

@@ -146,6 +146,7 @@ summary(lm2)
 cor.test(df_analysis$achievement, df_analysis$exploration)
 ```
 
+# Graphics
 ## Graphic of participant sample by race
 ```{r graphics}
 
@@ -173,11 +174,15 @@ by_race_bar <- ggplot(by_race, aes(x = race, y=number)) +
 
 by_race_bar
 
+```
 
+## Graphic of regression of stress onto mindfulness index score
+```{r}
+reg_mindf_stress <- ggplot(df_analysis, aes(x = mindful_score, y = stress_score)) + 
+  geom_point() +
+  stat_smooth(method = "lm", col = "green") +
+  facet_wrap(vars(sex), nrow = 2)
 
-
-
-
-
+reg_mindf_stress
 ```
 

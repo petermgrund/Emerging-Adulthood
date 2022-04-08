@@ -116,10 +116,29 @@ demographic_summary <- df_analysis %>%
 
 ```
 
-```{r prelim regression analyses}
-lm1 <- lm(achievement~stress_score, data=df_analysis)
-summary(lm1)
 
+## Correlaions
+```{r}
+# Between achievement and stress
+cor_achieve_stress <- cor.test(df_analysis$achievement, df_analysis$stress_score)
+p_cor_achieve_stress <- cor_achieve_stress$p.value
+
+# Between stess and mindfulness
+cor_mindful_stress <- cor.test(df_analysis$mindful_score, df_analysis$stress_score)
+p_cor_mindful_stress <- cor_mindful_stress$p.value
+
+```
+
+
+
+## Linear models
+```{r prelim regression analyses}
+# Linear model 1: Regressing achievment score onto stress
+lm_1 <- lm(achievement ~ stress_score, data = df_analysis)
+
+summary(lm_1)
+
+#
 cor.test(df_analysis$achievement, df_analysis$stress_score)
 
 lm2 <- lm(achievement~exploration, data=df_analysis)

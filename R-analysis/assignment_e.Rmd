@@ -55,7 +55,7 @@ df_analysis$exploration <- df_analysis %>%
 ## Measures of Adulthood
 ```{r Score measures of adulthood}
 df_analysis$achievement <- df_analysis %>% 
-  select(starts_with("moa2")) %>% 
+  select(starts_with("moa1#2")|starts_with("moa2#2")) %>% 
   # select items from the MOA to create achievement index
   rowSums()
 
@@ -133,20 +133,42 @@ p_cor_ach_explor <- cor_ach_explor$p.value
 ```
 
 
-
 ## Linear models
 ```{r prelim regression analyses}
-# Linear model 1: Regressing achievement score onto stress
+# Linear model 1: Regressing achievement score onto stress (DV and IV)
 lm_1 <- lm(achievement ~ stress_score, data = df_analysis)
 
 summary(lm_1)
 
-#
-cor.test(df_analysis$achievement, df_analysis$stress_score)
-
-lm2 <- lm(achievement~exploration, data=df_analysis)
+# Linear model 2: Regressing exploration score onto achievement (mediator and DV)
+lm2 <- lm(exploration~achievement, data=df_analysis)
 summary(lm2)
-cor.test(df_analysis$achievement, df_analysis$exploration)
+
+#omit NA values for later mediation analysis 
+df_analysis<- na.omit(df_analysis)
+
+# Linear model 3: Regressing exploration on stress (mediator and IV) 
+lm3 <- lm(exploration~stress_score, data=df_analysis)
+summary(lm3)
+
+#Linear model 4: Regressing mindfulness score onto stress (exploratory analysis)
+lm4 <- lm(mindful_score~stress_score, data=df_analysis)
+summary(lm4)
+```
+
+## Mediation Analysis 
+```{r}
+
+#linear regression of IV and mediator onto DV
+lm_mediation <- lm(achievement~stress_score+exploration, df_analysis)
+summary(lm_mediation)
+
+#causal mediation analysis
+install.packages("mediation")
+library(mediation)
+
+mediation_mod<- mediate(lm3, lm_mediation, treat="stress_score", mediator="exploration", boot=T)
+summary(mediation_mod)
 ```
 
 # Graphics
@@ -181,15 +203,16 @@ by_race_bar
 
 ## Graphic of regression of stress onto achievement 
 ```{r}
-reg_achieve_stress <- ggplot(df_analysis, aes(x = achievement, y = stress_score)) + 
+reg_achieve_stress <- ggplot(df_analysis, aes(x = stress_score, y = achievement)) + 
   geom_point() +
   stat_smooth(method = "lm", col = "green") 
 reg_achieve_stress
 ```
 
-## Graphic of regression of stress onto mindfulness
+
+## Graphic of regression of stress onto mindfulness (exploratory analysis)
 ```{r}
-reg_mindf_stress <- ggplot(df_analysis, aes(x = mindful_score, y = stress_score)) + 
+reg_mindf_stress <- ggplot(df_analysis, aes(x = stress_score, y = mindful_score)) + 
   geom_point() +
   stat_smooth(method = "lm", col = "green") +
   facet_wrap(vars(sex), nrow = 2)
@@ -197,6 +220,12 @@ reg_mindf_stress <- ggplot(df_analysis, aes(x = mindful_score, y = stress_score)
 reg_mindf_stress
 ```
 
+## Graphic of regression of stress on exploration 
+```{r}
+reg_expl_stress <- ggplot(df_analysis, aes(x = stress_score, y = exploration)) +
+  geom_point() +
+  stat_smooth(method= "lm", col = "green") 
+```
 # Incomplete Analyses and Visuals 
 ## Mediating Variable Analysis 
 A linear regression of our IV (stress score) on the DV (achievement) has already been completed. The next step is to run a linear regression of stress score on exploration (mediating variable). From there, the Mediation package will be downloaded to combine the regression models created above and estimate medation. 

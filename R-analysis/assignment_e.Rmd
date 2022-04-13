@@ -31,7 +31,7 @@ df <- read_csv("In-data/emerging_adult_data.csv")
 # Clean data
 
 ```{r Add rows}
-df$ID <- 1:nrow(df)
+df$ID <- 1:nrow(df) + 1000
 ```
 
 ```{r Select variables}

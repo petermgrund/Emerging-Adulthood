@@ -156,21 +156,6 @@ lm4 <- lm(mindful_score~stress_score, data=df_analysis)
 summary(lm4)
 ```
 
-## Mediation Analysis 
-```{r}
-
-#linear regression of IV and mediator onto DV
-lm_mediation <- lm(achievement~stress_score+exploration, df_analysis)
-summary(lm_mediation)
-
-#causal mediation analysis
-install.packages("mediation")
-library(mediation)
-
-mediation_mod<- mediate(lm3, lm_mediation, treat="stress_score", mediator="exploration", boot=T)
-summary(mediation_mod)
-```
-
 # Graphics
 ## Graphic of participant sample by race
 ```{r graphics}
@@ -232,3 +217,17 @@ A linear regression of our IV (stress score) on the DV (achievement) has already
 
 ## Regression Visuals
 A graphic of the regression of stress on exploration will be created as well as a graphical representation of the mediated effect. 
+
+## Mediation Analysis 
+```{r}
+
+#linear regression of IV and mediator onto DV
+lm_mediation <- lm(achievement~stress_score+exploration, df_analysis)
+summary(lm_mediation)
+
+#causal mediation analysis
+library(mediation)
+
+mediation_mod<- mediate(lm3, lm_mediation, treat="stress_score", mediator="exploration", boot=T)
+summary(mediation_mod)
+```

@@ -48,7 +48,10 @@ df_analysis <- df %>%
 df_analysis$exploration <- df_analysis %>% 
   select(IDEA_1, IDEA_2, IDEA_5, IDEA_6) %>%
   # select items 1, 2, 5, and 6 to create exploration index
-  rowMeans()
+  rowMeans() 
+
+df_analysis$exploration_bin <- df_analysis %>%
+  
 
 ```
 
@@ -230,4 +233,7 @@ library(mediation)
 
 mediation_mod<- mediate(lm3, lm_mediation, treat="stress_score", mediator="exploration", boot=T)
 summary(mediation_mod)
+
+library(tidyverse)
+
 ```

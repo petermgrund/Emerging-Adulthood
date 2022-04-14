@@ -43,7 +43,7 @@ df_analysis <- df %>%
 ```
 
 # Score measures
-## IDEA
+## IDEA - Exploration
 ```{r Score IDEA}
 df_analysis$exploration <- df_analysis %>% 
   select(IDEA_1, IDEA_2, IDEA_5, IDEA_6) %>%

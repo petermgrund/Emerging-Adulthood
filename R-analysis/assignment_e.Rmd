@@ -17,6 +17,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r Import data and dependencies}
 library(tidyverse)
+library(mediation)
 library(car)
 library(viridis)
 ```
@@ -36,7 +37,7 @@ df$ID <- 1:nrow(df) + 1000
 
 ```{r Select variables}
 df_analysis <- df %>%
-  select(ID, mindful_1:mindful_biascheck, sex:race, school_coded, IDEA_1:`IDEA-bias-dummy`, income, stress_1:stress_bias_dummy, `moa1#1_1`:`MOA-ACH_dummy`) %>%
+  dplyr::select(ID, mindful_1:mindful_biascheck, sex:race, school_coded, IDEA_1:`IDEA-bias-dummy`, income, stress_1:stress_bias_dummy, `moa1#1_1`:`MOA-ACH_dummy`) %>%
   # select variables of interest
   filter(age <= 25)
   # remove participants over the age of 25
@@ -46,19 +47,16 @@ df_analysis <- df %>%
 ## IDEA - Exploration
 ```{r Score IDEA}
 df_analysis$exploration <- df_analysis %>% 
-  select(IDEA_1, IDEA_2, IDEA_5, IDEA_6) %>%
+  dplyr::select(IDEA_1, IDEA_2, IDEA_5, IDEA_6) %>%
   # select items 1, 2, 5, and 6 to create exploration index
   rowMeans() 
-
-df_analysis$exploration_bin <- df_analysis %>%
   
-
 ```
 
 ## Measures of Adulthood
 ```{r Score measures of adulthood}
 df_analysis$achievement <- df_analysis %>% 
-  select(starts_with("moa1#2")|starts_with("moa2#2")) %>% 
+  dplyr::select(starts_with("moa1#2")|starts_with("moa2#2")) %>% 
   # select items from the MOA to create achievement index
   rowSums()
 
@@ -72,7 +70,8 @@ df_analysis$stress_7 <- recode(df_analysis$stress_7, '5=1; 4=2; 3=3; 2=4; 1=5')
 df_analysis$stress_8 <- recode(df_analysis$stress_8, '5=1; 4=2; 3=3; 2=4; 1=5')
 # reverse code items 4, 5, 7, and 8 on the PSS
 
-df_analysis$stress_score <- df_analysis %>% select(stress_1:stress_10) %>% 
+df_analysis$stress_score <- df_analysis %>% 
+  dplyr::select(stress_1:stress_10) %>% 
   rowSums()
 # create single index of stress
 ```
@@ -80,7 +79,7 @@ df_analysis$stress_score <- df_analysis %>% select(stress_1:stress_10) %>%
 ## Mindfulness
 ```{r Score mindfulness}
 df_analysis$mindful_score <- df_analysis %>%
-  select(starts_with("mindful")) %>%
+  dplyr::select(starts_with("mindful")) %>%
   # select all rows starting with mindfulness
   rowMeans()
 
@@ -164,7 +163,7 @@ summary(lm4)
 ```{r graphics}
 
 by_race <- demographic_summary %>% 
-  select(n_white:n_other_race) %>%
+  dplyr::select(n_white:n_other_race) %>%
   pivot_longer(
     cols = starts_with("n_"),
     names_prefix = "n_",
@@ -237,9 +236,6 @@ A graphic of the regression of stress on exploration will be created as well as 
 #linear regression of IV and mediator onto DV
 lm_mediation <- lm(achievement~stress_score+exploration, df_analysis)
 summary(lm_mediation)
-
-#causal mediation analysis
-library(mediation)
 
 mediation_mod<- mediate(lm3, lm_mediation, treat="stress_score", mediator="exploration", boot=T)
 summary(mediation_mod)

@@ -173,21 +173,18 @@ by_race <- demographic_summary %>%
 
 by_race$race <- as.factor(by_race$race)
 
-levels(by_race$race) <- c("White", "Other race", "Hispanic/Latino", "Black", "Asian", "Native American")
-  
-scale_order <- c("White", "Other race", "Hispanic/Latino", "Black","Asian", "Native American")
+scale_order <- c("white", "other_race", "hispanic", "black","asian", "native")
 
 by_race_bar <- ggplot(by_race, aes(x = race, y=number)) + 
   geom_bar(stat = "identity", aes(fill = race)) +
   theme_minimal() + 
-  scale_x_discrete(limits = scale_order) +
   scale_fill_viridis(discrete = TRUE) +
   theme(legend.position = "none") +
   labs(title="Plot of sample by racial identity",
         x ="Race", y = "Count") +
-  theme(axis.text = element_text(size=15, face="bold"))  +
+  theme(axis.text = element_text(size=10, face="bold"))  +
   theme(legend.position="none") +
-  theme(legend.text=element_text(size=20))
+  theme(legend.text=element_text(size=10))
 
 
 by_race_bar

@@ -1,5 +1,5 @@
 ---
-title: "Assignment E"
+title: "Analysis"
 subtitle: "PSY 4960"
 author: "Peter M Grund, Helen Yu, Petra Liu"
 date: "4/6/2022"
@@ -110,7 +110,9 @@ demographic_summary <- df_analysis %>%
     n_hispanic = length(which(race == 3)),
     n_asian = length(which(race == 4)),
     n_native = length(which(race == 5)),
-    n_other_race = length(which(race > 5))
+    n_other_race = length(which(race > 5)),
+    n_male = length(which(sex == 1)),
+    n_female = length(which(sex == 2))
   )
 
 
